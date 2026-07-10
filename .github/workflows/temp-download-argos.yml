@@ -1,0 +1,20 @@
+name: Temporary Argos model download
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download English-Chinese model
+        run: |
+          curl -L --fail --retry 3 "https://argos-net.com/v1/translate-en_zh-1_9.argosmodel" -o translate-en_zh-1_9.argosmodel
+          ls -lh translate-en_zh-1_9.argosmodel
+      - name: Upload model
+        uses: actions/upload-artifact@v4
+        with:
+          name: argos-en-zh-model
+          path: translate-en_zh-1_9.argosmodel
+          retention-days: 1
